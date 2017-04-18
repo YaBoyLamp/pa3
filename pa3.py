@@ -9,9 +9,9 @@ SIZE = 100
 MAX_INT = 10 ** 12
 
 # generates random problem i.e. list of length size
-def rprob(size):
+def rprob():
   A = []
-  for i in range(0,size):
+  for i in range(0,SIZE):
     A.append(randint(1,MAX_INT))
   return A
 
@@ -19,20 +19,26 @@ def rprob(size):
 # returns residue
  # note heapq is min heap
 def kk(A):
+  t0 = time.time()
   A_prime = [-elt for elt in A]
+  t1 = time.time()
+  
   heapify(A_prime)
+  t0 = time.time()
+  first = heappop(A_prime)
   for i in range(0,SIZE - 1):
-    first = heappop(A_prime)
     second = heappop(A_prime)
-    heappush(A_prime, first - second)
-  res = -heappop(A_prime)
+    first = heappushpop(A_prime, first - second)
+  res = -first
+  t1 = time.time()
+  print(t1-t0)
   return res
 
 # generates random solution 
-def rsol(A):
+def rsol():
   P = []
-  for i in range(0,len(A)):
-    P.append(randint(0, len(A) - 1))
+  for i in range(0,SIZE):
+    P.insert(0, randint(0, SIZE - 1))
   return P
 
 # turns pre-partitioned solution into standard form solution
@@ -60,16 +66,16 @@ def cooling(iter):
 
 # repeated random
 def rr(A):
-  S = rsol(A)
+  S = rsol()
   for i in range(0,MAX_ITER):
-    S_prime = rsol(A)
+    S_prime = rsol()
     if residue(S_prime,A) < residue(S,A):
       S = S_prime
   return S
 
 # hill climbing
 def hc(A):
-  S = rsol(A)
+  S = rsol()
   for i in range(0,MAX_ITER):
     S_prime = rneighbor(S)
     if residue(S_prime,A) < residue(S,A):
@@ -78,7 +84,7 @@ def hc(A):
 
 # simulated annealing
 def sa(A):
-  S = rsol(A)
+  S = rsol()
   S_2prime = S[:]
   prime2_res = residue(S_2prime, A)
   for i in range(0, MAX_ITER):
@@ -97,11 +103,13 @@ def sa(A):
 
 
 t = time.time()
-for i in range(0,1):
-  A = rprob(SIZE)
+
+iters = 100
+for i in range(0,iters):
+  A = rprob()
   
   kk(A)
-  
+  '''
   
   t0 = time.time()
   S_rr = rr(A)
@@ -118,7 +126,7 @@ for i in range(0,1):
   t1 = time.time()
   print('sa')
   print(t1-t0)
-'''
+
   print('kk')
   print(kk(A))
   print("rr")
