@@ -96,12 +96,12 @@ def sa(A):
 
 
 
-t0 = time.time()
-for i in range(0,1000):
+t = time.time()
+for i in range(0,1):
   A = rprob(SIZE)
   
   kk(A)
-  '''
+  
   
   t0 = time.time()
   S_rr = rr(A)
@@ -118,7 +118,7 @@ for i in range(0,1000):
   t1 = time.time()
   print('sa')
   print(t1-t0)
-
+'''
   print('kk')
   print(kk(A))
   print("rr")
@@ -132,6 +132,6 @@ for i in range(0,1000):
 # print(S_sa)
   print()
 '''
-t1 = time.time()
+tz = time.time()
 
-print(t1-t0)
+print(tz-t)
