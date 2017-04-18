@@ -16,12 +16,12 @@ def rprob(size):
 
 def kk(A):
   A_prime = [-elt for elt in A]
-  for i in range(0,len(A)):
-    heapify(A_prime)
-    first = heapreplace(A_prime,0)
+  heapify(A_prime)
+  for i in range(0,len(A) - 1):
+    first = heappop(A_prime)
     second = heappop(A_prime)
     heappush(A_prime, first - second)
-  res = -1 * heappop(A_prime)
+  res = -heappop(A_prime)
   return res
 
 def rsol(A):
@@ -85,8 +85,11 @@ def sa(A):
 
 
 t0 = time.time()
-for i in range(0,1):
+for i in range(0,1000):
   A = rprob(SIZE)
+  
+  kk(A)
+  '''
   
   t0 = time.time()
   S_rr = rr(A)
@@ -103,7 +106,7 @@ for i in range(0,1):
   t1 = time.time()
   print('sa')
   print(t1-t0)
-'''
+
   print('kk')
   print(kk(A))
   print("rr")
@@ -119,4 +122,4 @@ for i in range(0,1):
 '''
 t1 = time.time()
 
-#print(t1-t0)
+print(t1-t0)
