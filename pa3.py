@@ -9,9 +9,9 @@ SIZE = 100
 MAX_INT = 10 ** 12
 
 # generates random problem i.e. list of length size
-def rprob(size):
+def rprob():
   A = []
-  for i in range(0,size):
+  for i in range(0,SIZE):
     A.append(randint(1,MAX_INT))
   return A
 
@@ -29,10 +29,10 @@ def kk(A):
   return res
 
 # generates random solution 
-def rsol(A):
+def rsol():
   P = []
-  for i in range(0,len(A)):
-    P.append(randint(0, len(A) - 1))
+  for i in range(0,SIZE):
+    P.append(randint(0, SIZE - 1))
   return P
 
 # turns pre-partitioned solution into standard form solution
@@ -60,16 +60,16 @@ def cooling(iter):
 
 # repeated random
 def rr(A):
-  S = rsol(A)
+  S = rsol()
   for i in range(0,MAX_ITER):
-    S_prime = rsol(A)
+    S_prime = rsol()
     if residue(S_prime,A) < residue(S,A):
       S = S_prime
   return S
 
 # hill climbing
 def hc(A):
-  S = rsol(A)
+  S = rsol()
   for i in range(0,MAX_ITER):
     S_prime = rneighbor(S)
     if residue(S_prime,A) < residue(S,A):
@@ -78,7 +78,7 @@ def hc(A):
 
 # simulated annealing
 def sa(A):
-  S = rsol(A)
+  S = rsol()
   S_2prime = S[:]
   prime2_res = residue(S_2prime, A)
   for i in range(0, MAX_ITER):
@@ -97,8 +97,9 @@ def sa(A):
 
 
 t0 = time.time()
-for i in range(0,1000):
-  A = rprob(SIZE)
+n.iter = 1000
+for i in range(0,n.iter):
+  A = rprob()
   
   kk(A)
   '''
