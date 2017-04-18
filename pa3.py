@@ -1,9 +1,10 @@
 from random import randint
+from random import uniform
 from heapq import *
 import math
 import time
 
-MAX_ITER = 25000
+MAX_ITER = 1000
 SIZE = 100
 MAX_INT = 10 ** 12
 
@@ -85,7 +86,7 @@ def sa(A):
     res = residue(S,A)
     if prime_res < res:
       S = S_prime
-    elif (math.exp(-1*(prime_res - res) / cooling(i))):
+    elif (uniform(0,1) < math.exp(-1*(prime_res - res) / cooling(i))):
       S = S_prime
     if (prime_res < prime2_res):
       S_2prime = S[:]
@@ -97,9 +98,23 @@ def sa(A):
 t0 = time.time()
 for i in range(0,1):
   A = rprob(SIZE)
+  
+  t0 = time.time()
   S_rr = rr(A)
+  t1 = time.time()
+  print('rr')
+  print(t1-t0)
+  t0 = time.time()
   S_hc = hc(A)
+  t1 = time.time()
+  print('hc')
+  print(t1-t0)  
+  t0 = time.time()
   S_sa = sa(A)
+  t1 = time.time()
+  print('sa')
+  print(t1-t0)
+'''
   print('kk')
   print(kk(A))
   print("rr")
@@ -112,7 +127,7 @@ for i in range(0,1):
   print(residue(S_sa, A))
 # print(S_sa)
   print()
-
+'''
 t1 = time.time()
 
-print(t1-t0)
+#print(t1-t0)
