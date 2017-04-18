@@ -8,16 +8,13 @@ MAX_ITER = 1000
 SIZE = 100
 MAX_INT = 10 ** 12
 
-# generates random problem i.e. list of length size
+# generates random problem i.e. list of length SIZE
 def rprob():
-  A = []
-  for i in range(0,SIZE):
-    A.append(randint(1,MAX_INT))
-  return A
+  return [randint(1, MAX_INT) for i in xrange(SIZE)]
 
 # runs Karmankar-Karp algorithm on list A of integers 
 # returns residue
- # note heapq is min heap
+# note heapq is min heap
 def kk(A):
   A_prime = [-elt for elt in A]
   heapify(A_prime)
@@ -28,12 +25,9 @@ def kk(A):
   res = -heappop(A_prime)
   return res
 
-# generates random solution 
+# generates random solution of length SIZE
 def rsol():
-  P = []
-  for i in range(0,SIZE):
-    P.append(randint(0, SIZE - 1))
-  return P
+  return [randint(0, SIZE - 1) for i in xrange(SIZE)]
 
 # turns pre-partitioned solution into standard form solution
 # returns residue
@@ -94,45 +88,22 @@ def sa(A):
       prime2_res = prime_res
   return S_2prime
 
-
-
-t0 = time.time()
-n.iter = 1000
-for i in range(0,n.iter):
+# testing 
+niter = 1
+for i in range(0,niter):
   A = rprob()
-  
-  kk(A)
-  '''
-  
+    
   t0 = time.time()
   S_rr = rr(A)
   t1 = time.time()
-  print('rr')
-  print(t1-t0)
+  print 'Repeated random sampling time:', (t1 - t0), "seconds / residue of", residue(S_rr, A)
   t0 = time.time()
   S_hc = hc(A)
   t1 = time.time()
-  print('hc')
-  print(t1-t0)  
+  print 'Hill climbing sampling time: ', (t1 - t0), " seconds / residue of", residue(S_hc, A)
   t0 = time.time()
   S_sa = sa(A)
   t1 = time.time()
-  print('sa')
-  print(t1-t0)
+  print 'Simulated annealing sampling time: ', (t1 - t0), " seconds / residue of", residue(S_sa, A)
 
-  print('kk')
-  print(kk(A))
-  print("rr")
-  print(residue(S_rr, A))
-# print(S_rr)
-  print("hc")
-  print(residue(S_hc, A))
-# print(S_hc)
-  print("sa")
-  print(residue(S_sa, A))
-# print(S_sa)
-  print()
-'''
-t1 = time.time()
 
-print(t1-t0)
