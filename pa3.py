@@ -21,7 +21,7 @@ def rprob(size):
 def kk(A):
   A_prime = [-elt for elt in A]
   heapify(A_prime)
-  for i in range(0,len(A)):
+  for i in range(0,SIZE - 1):
     first = heappop(A_prime)
     second = heappop(A_prime)
     heappush(A_prime, first - second)
