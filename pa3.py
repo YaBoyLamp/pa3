@@ -7,34 +7,41 @@ MAX_ITER = 25000
 SIZE = 100
 MAX_INT = 10 ** 12
 
+# generates random problem i.e. list of length size
 def rprob(size):
   A = []
   for i in range(0,size):
     A.append(randint(1,MAX_INT))
   return A
 
+# runs Karmankar-Karp algorithm on list A of integers 
+# returns residue
 def kk(A):
   A_prime = [-elt for elt in A]
   for i in range(0,len(A)):
-    heapify(A_prime)
+    heapify(A_prime) # note heapq is min heap
     first = heapreplace(A_prime,0)
     second = heappop(A_prime)
     heappush(A_prime, first - second)
   res = -1 * heappop(A_prime)
   return res
 
+# generates random solution 
 def rsol(A):
   P = []
   for i in range(0,len(A)):
     P.append(randint(0, len(A) - 1))
   return P
 
+# turns pre-partitioned solution into standard form solution
+# returns residue
 def residue(P, A):
   A_prime = [0] * len(A)
   for i in range(0,len(A)):
     A_prime[P[i]] += A[i]
   return kk(A_prime)
 
+# generates random neighbor (list differing in one spot)
 def rneighbor(P):
   P_prime = P[:]
   i = randint(0, len(P_prime) - 1)
@@ -44,10 +51,12 @@ def rneighbor(P):
   P_prime[i] = j
   return P_prime
 
+# cooling function given in problem set
 def cooling(iter):
   expo = math.floor(iter / 300)
   return (10 ** 10) * (.8 ** expo)
 
+# repeated random
 def rr(A):
   S = rsol(A)
   for i in range(0,MAX_ITER):
@@ -56,6 +65,7 @@ def rr(A):
       S = S_prime
   return S
 
+# hill climbing
 def hc(A):
   S = rsol(A)
   for i in range(0,MAX_ITER):
@@ -64,6 +74,7 @@ def hc(A):
       S = S_prime
   return S
 
+# simulated annealing
 def sa(A):
   S = rsol(A)
   S_2prime = S[:]
