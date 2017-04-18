@@ -16,19 +16,14 @@ def rprob():
 # returns residue
 # note heapq is min heap
 def kk(A):
-  t0 = time.time()
   A_prime = [-elt for elt in A]
-  t1 = time.time()
   
   heapify(A_prime)
-  t0 = time.time()
   first = heappop(A_prime)
   for i in range(0,SIZE - 1):
     second = heappop(A_prime)
     first = heappushpop(A_prime, first - second)
   res = -first
-  t1 = time.time()
-  print(t1-t0)
   return res
 
 # generates random solution of length SIZE
