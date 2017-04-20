@@ -1,15 +1,15 @@
-\documentclass[11pt]{article}
+\documentclass[a4paper]{article}
 \usepackage{pdfpages}
+\usepackage{fullpage} % Package to use full page
+\usepackage{parskip} % Package to tweak paragraph skipping
+\usepackage{tikz} % Package for drawing
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{booktabs}
 % \pagestyle{empty}
 
-\setlength{\oddsidemargin}{-0.25 in}
-\setlength{\evensidemargin}{-0.25 in}
-\setlength{\topmargin}{-0.9 in}
-\setlength{\textwidth}{7.0 in}
-\setlength{\textheight}{9.0 in}
-\setlength{\headsep}{0.75 in}
-\setlength{\parindent}{0.3 in}
-\setlength{\parskip}{0.1 in}
 \usepackage{epsf}
 \usepackage{pseudocode}
 \usepackage{listings}
@@ -25,10 +25,19 @@
 \newcommand{\R}{{\bf R}}
 \newcommand{\Z}{{\bf Z}}
 
+\title{Programming Assignment 3 : Partitioning Problem}
+\author{HUIDS: 90978217 AND 90949705}
+\date{04/21/2017}
+
 \begin{document}
-	\noindent HUID: 90949705 \& \\
-	\vspace{.2in}
-	The dynamic programming solution to the Number partition problem involves creating an $n$X$2b$ table. Every $(i,j)$ entry of the table contains a boolean, which describes if the first $i$ numbers can make the residue $j$  Once the table is filled the optimal solution is found by looking for the smallest $k$ such that entry $(n,k)$ is True. Let $A$ be the sequence that represents the number partition problem (indexed at 1). Below is the recursive definition
+
+\maketitle
+
+\section{Overview}
+Blahblah
+
+\section{Dynamic Programming}
+	The dynamic programming solution to the Number partition problem involves creating an $n \times 2b$ table. Every $(i,j)$ entry of the table contains a boolean, which describes if the first $i$ numbers can make the residue $j$  Once the table is filled the optimal solution is found by looking for the smallest $k$ such that entry $(n,k)$ is True. Let $A$ be the sequence that represents the number partition problem (indexed at 1). Below is the recursive definition
 	\[X(i,j) = 
 	\begin{cases}
 	 True & i = 1, j = A[1]\\
@@ -40,5 +49,17 @@
 	In essence, this recursive definition determines the new residue by adding or subtracting the next number in the problem to the residue of the current sequence. If a residue $j$ is unattainable with the first $i$ numbers in the sequence, the value at $(i,j)$ is set to False. \\\\
 	This algorithm exhaustively checks every residue that an instance of the number partition problem can make. The runtime of this algorithm is $O(nb)$ because every entry in the table is checked exactly once and the operation done at each cell is to check two booleans.\\\\\\
 	The Karmarkar-Karp algorithm can be performed in $O(n\log n)$ time if a max heap is used. At every iteration of the Karmarkar-Karp algorithm needs to find the largest two elements in the problem, perform a subtraction, and push the difference onto the heap. This process is $O(\log n)$ because popping takes constant time and adding to the heap is logarithmic time. This process occurs $n-1$ times because one element is removed every iteration and the algorithm stops when there is one element remaining.\\\\
+\section{Karmankar-Karp}
+	The Karmarkar-Karp algorithm can be performed in $O(n\log n)$ time if a max heap is used. At every iteration of the Karmarkar-Karp algorithm needs to find the largest two elements in the problem, perform a subtraction, and push the difference onto the heap. This process is $O(\log n)$ because popping takes constant time and adding to the heap is logarithmic time. This process occurs $n-1$ times because one element is removed every iteration and the algorithm stops when there is one element remaining.
+	
+\section{Results and Discussion}
+	Blahblah
+
+\section{Future Work}
+	\textit{Discuss briefly how you could use the solution from the Karmarkar-Karp algorithm as a starting point for the randomized algorithms, and suggest what effect that might have. (No experiments are necessary, but feel free to try it.)}
+	
+	Instead of starting our random algorithms with a random solution, we could instead start with the partitioning given by running Karmankar-Karp algorithm on the list. Because Karmankar-Karp always gives us a decent approximation to the ideal partitioning, we would be starting intuitively from a ``better" place than a random solution. In particular, for algorithms that involve stepping to neighbors of the initial starting list (i.e. hill climbing and simulated annealing), starting from the Karmankar-Karp solution will be beneficial; for the repeated random method, starting from Karmankar-Karp has no bearing on the subsequently-generated random solutions, so starting from KK likely has less benefit.
+	
+	Note that for all three methods, including repeated random, starting from KK ensures that the maximum residue we can obtain is our initial KK residue (i.e. we can't do worse than the initial decent solution).
 	
 \end{document}
