@@ -38,7 +38,6 @@
 	
 	Our code may be run by executing the following commands in the terminal:
 	\begin{verbatim}
-	$ make
 	$ ./kk inputfile
 	\end{verbatim}
 	where \texttt{inputfile} specifies the file of 100 integers that represent the number partition problem for the Karmarkar-Karp algorithm to execute on.
@@ -68,9 +67,9 @@
 	Overall, we found that the Sequence of Signs(SS) representation of a solution computed much faster than the Pre-partition(PP) representation. This result makes sense because of the way residue is calculated for each representation. For the SS representation, residue is calculated in $O(n)$ time because every number is just multiplied by its respective sign and summed. For the PP representation, residue us calculated in $O(n\log n)$ time because the Karmankar-Karp algorithm has to execute on the generated problem.
 	
 	\subsection{Data}
-	We generated 100 random instances of sets of 100 integers from 1 to $10^12$. For each instance, we first calculated the residue obtained by running KK. Then, for 25k iterations each, we ran the repeated random, hill climbing, and simulated annealing algorithms starting from a random solution and using both the standard sequence of signs and the prepartitioning representations. 
+	We generated 100 random instances of sets of 100 integers from 1 to $10^{12}$. For each instance, we first calculated the residue obtained by running KK. Then, for 25k iterations each, we ran the repeated random, hill climbing, and simulated annealing algorithms starting from a random solution and using both the standard sequence of signs and the prepartitioning representations. 
 	
-	After running just KK on the 100 instances, we obtained a final average residual of \textbf{222397.03}. After running the standard and prepartitioning algorithms for each instance, we obtained the following residual and time averages, included in the table below; if desired, see attached data file (submitted along with this PDF) for more detail. 
+	After running just KK on the 100 instances, we obtained a final average residual of \textbf{222397.03}. After running the standard and prepartitioning algorithms for each instance, we obtained the following residual and time averages, included in the table below. Note that the standard sequence of signs representation's residuals are multiplied by $1E8$. If desired, see attached data file (submitted along with this PDF) for more detail. 
 	
 \begin{tabular}{l|ll|ll}
 \textbf{}           & \multicolumn{2}{l|}{\textbf{Standard Rep.}}               & \multicolumn{2}{l|}{\textbf{Prepartitioning}} \\ \hline
@@ -80,6 +79,8 @@ Hill Climbing       & 4.00                                & 0.86                
 Simulated Annealing & 2.54                                & 0.90                & 223.81                  & 27.60              
 \end{tabular}
 	
+	\vspace{0.2in}
+	The graphical representation of our data is as follows:\\
 	\includegraphics[width=3in]{ss_resid}
 	\includegraphics[width=3in]{ss_time}\\
 	\includegraphics[width=3in]{pp_resid}
