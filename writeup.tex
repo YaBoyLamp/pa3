@@ -66,7 +66,8 @@
 	Blah blah details
 	
 	\section{Results and Discussion}
-	Blahblah
+	\subsection{Sequence of Signs vs Pre-partition}
+	Overall, we found that the Sequence of Signs(SS) representation of a solution computed much faster than the Pre-partition(PP) representation. This result makes sense because of the way residue is calculated for each representation. For the SS representation, residue is calculated in $O(n)$ time because every number is just multiplied by its respective sign and summed. For the PP representation, residue us calculated in $O(n\log n)$ time because the Karmankar-Karp algorithm has to execute on the generated problem.
 	
 	\section{Future Work}
 	\textit{Discuss briefly how you could use the solution from the Karmarkar-Karp algorithm as a starting point for the randomized algorithms, and suggest what effect that might have. (No experiments are necessary, but feel free to try it.)}
