@@ -1,0 +1,43 @@
+\documentclass[11pt]{article}
+\usepackage{pdfpages}
+% \pagestyle{empty}
+
+\setlength{\oddsidemargin}{-0.25 in}
+\setlength{\evensidemargin}{-0.25 in}
+\setlength{\topmargin}{-0.9 in}
+\setlength{\textwidth}{7.0 in}
+\setlength{\textheight}{9.0 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0.3 in}
+\setlength{\parskip}{0.1 in}
+\usepackage{epsf}
+\usepackage{pseudocode}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{graphicx, color}
+\usepackage{amsmath}
+% \usepackage{times}
+% \usepackage{mathptm}
+
+\def\O{\mathop{\smash{O}}\nolimits}
+\def\o{\mathop{\smash{o}}\nolimits}
+\newcommand{\e}{{\rm e}}
+\newcommand{\R}{{\bf R}}
+\newcommand{\Z}{{\bf Z}}
+
+\begin{document}
+	\noindent HUID: 90949705 \& \\
+	\vspace{.2in}
+	The dynamic programming solution to the Number partition problem involves creating an $n$X$2b$ table. Every $(i,j)$ entry of the table contains a boolean, which describes if the first $i$ numbers can make the residue $j$  Once the table is filled the optimal solution is found by looking for the smallest $k$ such that entry $(n,k)$ is True. Let $A$ be the sequence that represents the number partition problem (indexed at 1). Below is the recursive definition
+	\[X(i,j) = 
+	\begin{cases}
+	 True & i = 1, j = A[1]\\
+	 False & i = 1, j \neq A[1] \\ 
+	 False & X(i-1, j + A[i]) = X(i-1, |j - A[i]|) = False \\
+	 True & otherwise
+	\end{cases}`
+	\]
+	In essence, this recursive definition determines the new residue by adding or subtracting the next number in the problem to the residue of the current sequence. If a residue $j$ is unattainable with the first $i$ numbers in the sequence, the value at $(i,j)$ is set to False. \\\\
+	This algorithm exhaustively checks every residue that an instance of the number partition problem can make. The runtime of this algorithm is $O(nb)$ because every entry in the table is checked exactly once and the operation done at each cell is to check two booleans.\\\\\\
+	The Karmarkar-Karp algorithm can be performed in $O(n\log n)$ time if a max heap is used. At every iteration of the Karmarkar-Karp algorithm needs to find the largest two elements in the problem, perform a subtraction, and push the difference onto the heap. This process is $O(\log n)$ because popping takes constant time and adding to the heap is logarithmic time. This process occurs $n-1$ times because one element is removed every iteration and the algorithm stops when there is one element remaining.
+\end{document}
