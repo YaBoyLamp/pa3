@@ -67,6 +67,29 @@
 	\subsection{Sequence of Signs vs Pre-partition}
 	Overall, we found that the Sequence of Signs(SS) representation of a solution computed much faster than the Pre-partition(PP) representation. This result makes sense because of the way residue is calculated for each representation. For the SS representation, residue is calculated in $O(n)$ time because every number is just multiplied by its respective sign and summed. For the PP representation, residue us calculated in $O(n\log n)$ time because the Karmankar-Karp algorithm has to execute on the generated problem.
 	
+	\subsection{Data}
+	We generated 100 random instances of sets of 100 integers from 1 to $10^12$. For each instance, we first calculated the residue obtained by running KK. Then, for 25k iterations each, we ran the repeated random, hill climbing, and simulated annealing algorithms starting from a random solution and using both the standard sequence of signs and the prepartitioning representations. 
+	
+	After running just KK on the 100 instances, we obtained a final average residual of \textbf{222397.03}. After running the standard and prepartitioning algorithms for each instance, we obtained the following residual and time averages, included in the table below; if desired, see attached data file (submitted along with this PDF) for more detail. 
+	
+\begin{tabular}{l|ll|ll}
+\textbf{}           & \multicolumn{2}{l|}{\textbf{Standard Rep.}}               & \multicolumn{2}{l|}{\textbf{Prepartitioning}} \\ \hline
+\textbf{Method}     & \textbf{Avg. Residual ($\times 1e8$)} & \textbf{Time (sec)} & \textbf{Avg. Residual}  & \textbf{Time (sec)} \\ \hline
+Repeated Random     & 2.97                                & 4.46                & 195.99                  & 25.87               \\
+Hill Climbing       & 4.00                                & 0.86                & 709.61                  & 31.19               \\
+Simulated Annealing & 2.54                                & 0.90                & 223.81                  & 27.60              
+\end{tabular}
+	
+	\includegraphics[width=3in]{ss_resid}
+	\includegraphics[width=3in]{ss_time}\\
+	\includegraphics[width=3in]{pp_resid}
+	\includegraphics[width=3in]{pp_time}
+	
+	\subsection{Discussion}
+	
+	
+
+	
 	\section{Future Work}
 	\textit{Discuss briefly how you could use the solution from the Karmarkar-Karp algorithm as a starting point for the randomized algorithms, and suggest what effect that might have. (No experiments are necessary, but feel free to try it.)}
 	
