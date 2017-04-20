@@ -25,7 +25,7 @@
 \newcommand{\R}{{\bf R}}
 \newcommand{\Z}{{\bf Z}}
 
-\title{Programming Assignment 3 : Partitioning Problem}
+\title{Programming Assignment 3 : Number Partitioning Problem}
 \author{HUIDS: 90978217 AND 90949705}
 \date{04/21/2017}
 
@@ -34,10 +34,18 @@
 \maketitle
 
 \section{Overview}
-Blahblah
+In this programming assignment, we implemented a number of heuristic algorithms to solve the Number Partitioning problem.
+
+ optimized version of Strassen's algorithm to multiply two $n$ by $n$ matrices. Because Strassen's is slower than conventional matrix multiplication for sufficiently small matrices, our algorithm uses Strassen's algorithm for matrices down to a certain threshold size $n_0$, at which point which we utilize standard matrix multiplication. We determine $n_0$ both analytically and experimentally. The results from our studies are presented in this report.
+
+Our code may be run by executing the following commands in the terminal:
+\begin{verbatim}
+$ make
+$ ./strassen <verbosity> <dimension> <inputfile>
+\end{verbatim}
+where \texttt{verbosity} specifies the verbosity of the output (-1 for no output, 0 for the minimal output specified in the specs, 1 for more detailed output including matrix statistics).
 
 \section{Dynamic Programming}
-	\vspace{.2in}
 	The dynamic programming solution to the Number partition problem involves creating an $n \times 2b$ table. Every $(i,j)$ entry of the table contains a boolean, which describes if the first $i$ numbers can make the residue $j$  Once the table is filled the optimal solution is found by looking for the smallest $k$ such that entry $(n,k)$ is True. Let $A$ be the sequence that represents the number partition problem (indexed at 1). Below is the recursive definition
 	\[X(i,j) = 
 	\begin{cases}
@@ -51,8 +59,11 @@ Blahblah
 	
 	This algorithm exhaustively checks every residue that an instance of the number partition problem can make. The runtime of this algorithm is $O(nb)$ because every entry in the table is checked exactly once and the operation done at each cell is to check two booleans.
 	
-\section{Karmankar-Karp}
+\section{Methods}
+	\subsection{Karmankar-Karp}
 	The Karmarkar-Karp algorithm can be performed in $O(n\log n)$ time if a max heap is used. At every iteration of the Karmarkar-Karp algorithm needs to find the largest two elements in the problem, perform a subtraction, and push the difference onto the heap. This process is $O(\log n)$ because popping takes constant time and adding to the heap is logarithmic time. This process occurs $n-1$ times because one element is removed every iteration and the algorithm stops when there is one element remaining.
+	\subsection{Implementation}
+	Blah blah details
 	
 \section{Results and Discussion}
 	Blahblah
