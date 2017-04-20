@@ -34,7 +34,7 @@
 	\maketitle
 	
 	\section{Overview}
-	In this programming assignment, we implemented a number of heuristic algorithms to solve the Number Partitioning problem. Because the Number Partitioning problem is NP-complete, heuristics must be applied to achieve solutions that are close to optimal. The heuristics that we applied were Repeated Random (randomly generating solutions and only updating with a better one), Hill climbing (generating neighbor solutions and only updating with a better solution), and Simulated annealing (generating neighbor solutions and updating sometimes with neighbors that are not better). In addition to these three heuristics, we implemented two different representations of for solutions. The first is the standard representation of a solution, a sequence of positive and negative signs. This sequence partitions the problem into two groups, which are used to calculate the residue. The other representation is a pre-partitioned list. This representation consists of a list of length $n$ where each element is a number from $1$ to $n$. Indices with the same value indicate that the corresponding numbers in the problem must have the same sign.
+	In this programming assignment, we implemented a number of heuristic algorithms to solve the Number Partitioning problem. Because the Number Partitioning problem is NP-complete, heuristics must be applied to achieve solutions that are close to optimal. The heuristics that we applied were Repeated Random (randomly generating solutions and only updating with a better one), Hill climbing (generating neighbor solutions and only updating with a better solution), and Simulated annealing (generating neighbor solutions and updating sometimes with neighbors that are not better). In addition to these three heuristics, we implemented two different representations for solutions. The first is the standard representation of a solution, a sequence of positive and negative signs. This sequence partitions the problem into two groups, which are used to calculate the residue. The other representation is a pre-partitioned list. This representation consists of a list of length $n$ where each element is a number from $1$ to $n$. Indices with the same value indicate that the corresponding numbers in the problem must have the same sign.
 	
 	Our code may be run by executing the following commands in the terminal:
 	\begin{verbatim}
@@ -43,7 +43,7 @@
 	where \texttt{inputfile} specifies the file of 100 integers that represent the number partition problem for the Karmarkar-Karp algorithm to execute on.
 	
 	\section{Dynamic Programming}
-	The dynamic programming solution to the Number partition problem involves creating an $n \times 2b$ table. Every $(i,j)$ entry of the table contains a boolean, which describes if the first $i$ numbers can make the residue $j$  Once the table is filled the optimal solution is found by looking for the smallest $k$ such that entry $(n,k)$ is True. Let $A$ be the sequence that represents the number partition problem (indexed at 1). Below is the recursive definition
+	The dynamic programming solution to the Number partition problem involves creating an $n \times 2b$ table. Every $(i,j)$ entry of the table contains a boolean, which describes if the first $i$ numbers can make the residue $j$.  Once the table is filled the optimal solution is found by looking for the smallest $k$ such that entry $(n,k)$ is True. Let $A$ be the sequence that represents the number partition problem (indexed at 1). Below is the recursive definition
 	\[X(i,j) = 
 	\begin{cases}
 	True & i = 1, j = A[1]\\
@@ -56,8 +56,8 @@
 	
 	This algorithm exhaustively checks every residue that an instance of the number partition problem can make. The runtime of this algorithm is $O(nb)$ because every entry in the table is checked exactly once and the operation done at each cell is to check two booleans.
 	
-	\section{Karmankar-Karp}
-	The Karmarkar-Karp algorithm can be performed in $O(n\log n)$ time if a max heap is used. At every iteration of the Karmarkar-Karp algorithm needs to find the largest two elements in the problem, perform a subtraction, and push the difference onto the heap. This process is $O(\log n)$ because popping takes constant time and adding to the heap is logarithmic time. This process occurs $n-1$ times because one element is removed every iteration and the algorithm stops when there is one element remaining. Therefore the runtime of the algorithm is $O((n-1) \log n) = O(n\log n)$.
+	\section{Karmarkar-Karp}
+	The Karmarkar-Karp algorithm can be performed in $O(n\log n)$ time if a max heap is used. Every iteration of the Karmarkar-Karp algorithm needs to find the largest two elements remaining in the problem, perform a subtraction, and push the difference onto the heap. This process is $O(\log n)$ because popping takes constant time and adding to the heap is logarithmic time. This process occurs $n-1$ times because one element is removed every iteration and the algorithm stops when there is one element remaining. Therefore the runtime of the algorithm is $O((n-1) \log n) = O(n\log n)$.
 	
 	\section{Results and Discussion}
 	\subsection{Data}
@@ -85,13 +85,13 @@ Simulated Annealing & 2.54                                & 0.90                
 	
 	The disparity in runtimes between heuristics of the same solution representation can be explained at the implementation level. Repeated random for the standard representation is slower compared to the other the other two heuristics. This is most likely due to the use of the append function when generating a random solution. Otherwise, the runtimes between heuristics are relatively close, which makes sense because many of their operations are shared with some minor constant factor differences.
 	
-	Comparing the runtimes of the Sequence of Signs (SS) and pre-partitioning (PP) representation , we find that SS representation computes much faster than the PP representation. This result makes sense because of the way residue is calculated for each representation. For the SS representation, residue is calculated in $O(n)$ time because every number is just multiplied by its respective sign and summed. For the PP representation, residue us calculated in $O(n\log n)$ time because the Karmankar-Karp algorithm has to execute on the generated problem.
+	Comparing the runtimes of the Sequence of Signs (SS) and pre-partitioning (PP) representation , we find that SS representation computes much faster than the PP representation. This result makes sense because of the way residue is calculated for each representation. For the SS representation, residue is calculated in $O(n)$ time because every number is just multiplied by its respective sign and summed. For the PP representation, residue us calculated in $O(n\log n)$ time because the Karmarkar-Karp algorithm has to execute on the generated problem.
 	
 
 	
 	\section{Future Work}
 	
-	Instead of starting our random algorithms with a random solution, we could instead start with the partitioning given by running Karmankar-Karp algorithm on the list. Because Karmankar-Karp always gives us a decent approximation to the ideal partitioning, we would be starting intuitively from a ``better" place than a random solution. In particular, for algorithms that involve stepping to neighbors of the initial starting list (i.e. hill climbing and simulated annealing), starting from the Karmankar-Karp solution will be beneficial; for the repeated random method, starting from Karmankar-Karp has no bearing on the subsequently-generated random solutions, so starting from KK likely has less benefit.
+	Instead of starting our random algorithms with a random solution, we could instead start with the partitioning given by running Karmarkar-Karp algorithm on the list. Because Karmarkar-Karp always gives us a decent approximation to the ideal partitioning, we would be starting intuitively from a ``better" place than a random solution. In particular, for algorithms that involve stepping to neighbors of the initial starting list (i.e. hill climbing and simulated annealing), starting from the Karmarkar-Karp solution will be beneficial; for the repeated random method, starting from Karmarkar-Karp has no bearing on the subsequently-generated random solutions, so starting from KK likely has less benefit.
 	
 	Note that for all three methods, including repeated random, starting from KK ensures that the maximum residue we can obtain is our initial KK residue (i.e. we can't do worse than the initial decent solution).
 	
