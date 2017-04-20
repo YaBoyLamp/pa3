@@ -102,6 +102,7 @@ def time_func(func, A, output):
   output.write(str(t1 - t0) + " " + str(residue(solution, A)) + " // ") 
   return ((t1 - t0), residue(solution, A))
 
+# generates random file of 100 ints, each on a new line
 def random_input():
   random = open("random.txt", "w")
   for i in range(SIZE):
