@@ -41,7 +41,7 @@
 	$ make
 	$ ./kk inputfile
 	\end{verbatim}
-	where \texttt{inputfile} specifies the file of 100 integers that represent the number partition problem for the Karmarkar-Karp algorithm to execute on.
+	where \texttt{inputfile} specifies the file of 100 integers that represent the number partition problem for the Karmarkar 
 	
 	\section{Dynamic Programming}
 	The dynamic programming solution to the Number partition problem involves creating an $n \times 2b$ table. Every $(i,j)$ entry of the table contains a boolean, which describes if the first $i$ numbers can make the residue $j$  Once the table is filled the optimal solution is found by looking for the smallest $k$ such that entry $(n,k)$ is True. Let $A$ be the sequence that represents the number partition problem (indexed at 1). Below is the recursive definition
