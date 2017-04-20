@@ -38,10 +38,9 @@
 	
 	Our code may be run by executing the following commands in the terminal:
 	\begin{verbatim}
-	$ make
 	$ ./kk inputfile
 	\end{verbatim}
-	where \texttt{inputfile} specifies the file of 100 integers that represent the number partition problem for the Karmarkar 
+	where \texttt{inputfile} specifies the file of 100 integers that represent the number partition problem for the Karmarkar-Karp algorithm to execute on.
 	
 	\section{Dynamic Programming}
 	The dynamic programming solution to the Number partition problem involves creating an $n \times 2b$ table. Every $(i,j)$ entry of the table contains a boolean, which describes if the first $i$ numbers can make the residue $j$  Once the table is filled the optimal solution is found by looking for the smallest $k$ such that entry $(n,k)$ is True. Let $A$ be the sequence that represents the number partition problem (indexed at 1). Below is the recursive definition
@@ -86,7 +85,7 @@ Simulated Annealing & 2.54                                & 0.90                
 	\includegraphics[width=3in]{pp_time}
 	
 	\subsection{Discussion}
-	
+	These data show that the prepartitioning representation is much better than the standard representation. All three heuristic models returned averages with 9 digits, while the prepartitioning residuals were only 3 digits. This disparity is due to the Karmarkar-Karp algorithm, which is employed in calculating the residues for prepartitioning but not for the standard representation. Karmarkar-Karp adds another layer of heuristic that shapes the prepartitioned result to be better. Within one particular solution representation, hill climbing consistently performed the worst of the three heuristics. One explanation for this is that hill climbing will get stuck in local minimums. Even though a better solution can be achieved with a drastic change to the solution, hill climbing will never make this change because it will only accept marginal changes that are better. In both solution representations, simulated annealing and repeated random are relatively close in performance. Simulated annealing is not subject to the same trap of getting stuck in local minimums like hill climbing. Simulated annealing, however, is rather slow to make changes because it can only adjust to a neighbor. Repeated random makes drastic changes between iterations and only accepts better solutions. This works well for getting a good approximate answer because repeated random will not be bogged down by the way the numbers are distributed and just has a decent chance of hitting a good solution over many iterations. The disparity in runtimes between heuristics of the same solution representation can be explained at implementation level. Repeated random for the standard representation is slower compared to the other the other two heuristics. This is most likely due to the use of the append function when generating a random solution. Otherwise, the runtimes between heuristics are relatively close, which makes sense because many of their operations are shared with some minor constant factor differences.
 	
 
 	

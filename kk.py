@@ -174,7 +174,7 @@ print "Residue for given input file:", kk(A)
 
 
 """----- PART TWO: Generates 100 random instances of the problem, runs three algorithms on each -----"""
-niter = 100
+niter = 1
 
 # opens file to write data to
 output = open("output.txt", "w")
