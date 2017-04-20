@@ -38,7 +38,7 @@
 	
 	Our code may be run by executing the following commands in the terminal:
 	\begin{verbatim}
-	$ ./kk inputfile
+	$ ./kk.py inputfile
 	\end{verbatim}
 	where \texttt{inputfile} specifies the file of 100 integers that represent the number partition problem for the Karmarkar-Karp algorithm to execute on.
 	
@@ -56,16 +56,10 @@
 	
 	This algorithm exhaustively checks every residue that an instance of the number partition problem can make. The runtime of this algorithm is $O(nb)$ because every entry in the table is checked exactly once and the operation done at each cell is to check two booleans.
 	
-	\section{Methods}
-	\subsection{Karmankar-Karp}
+	\section{Karmankar-Karp}
 	The Karmarkar-Karp algorithm can be performed in $O(n\log n)$ time if a max heap is used. At every iteration of the Karmarkar-Karp algorithm needs to find the largest two elements in the problem, perform a subtraction, and push the difference onto the heap. This process is $O(\log n)$ because popping takes constant time and adding to the heap is logarithmic time. This process occurs $n-1$ times because one element is removed every iteration and the algorithm stops when there is one element remaining. Therefore the runtime of the algorithm is $O((n-1) \log n) = O(n\log n)$.
-	\subsection{Implementation}
-	Blah blah details
 	
 	\section{Results and Discussion}
-	\subsection{Sequence of Signs vs Pre-partition}
-	Overall, we found that the Sequence of Signs(SS) representation of a solution computed much faster than the Pre-partition(PP) representation. This result makes sense because of the way residue is calculated for each representation. For the SS representation, residue is calculated in $O(n)$ time because every number is just multiplied by its respective sign and summed. For the PP representation, residue us calculated in $O(n\log n)$ time because the Karmankar-Karp algorithm has to execute on the generated problem.
-	
 	\subsection{Data}
 	We generated 100 random instances of sets of 100 integers from 1 to $10^{12}$. For each instance, we first calculated the residue obtained by running KK. Then, for 25k iterations each, we ran the repeated random, hill climbing, and simulated annealing algorithms starting from a random solution and using both the standard sequence of signs and the prepartitioning representations. 
 	
@@ -80,19 +74,22 @@ Simulated Annealing & 2.54                                & 0.90                
 \end{tabular}
 	
 	\vspace{0.2in}
-	The graphical representation of our data is as follows:\\
+	The graphical representation of our data is as follows:\\\\
 	\includegraphics[width=3in]{ss_resid}
 	\includegraphics[width=3in]{ss_time}\\
 	\includegraphics[width=3in]{pp_resid}
 	\includegraphics[width=3in]{pp_time}
 	
 	\subsection{Discussion}
-	These data show that the prepartitioning representation is much better than the standard representation. All three heuristic models returned averages with 9 digits, while the prepartitioning residuals were only 3 digits. This disparity is due to the Karmarkar-Karp algorithm, which is employed in calculating the residues for prepartitioning but not for the standard representation. Karmarkar-Karp adds another layer of heuristic that shapes the prepartitioned result to be better. Within one particular solution representation, hill climbing consistently performed the worst of the three heuristics. One explanation for this is that hill climbing will get stuck in local minimums. Even though a better solution can be achieved with a drastic change to the solution, hill climbing will never make this change because it will only accept marginal changes that are better. In both solution representations, simulated annealing and repeated random are relatively close in performance. Simulated annealing is not subject to the same trap of getting stuck in local minimums like hill climbing. Simulated annealing, however, is rather slow to make changes because it can only adjust to a neighbor. Repeated random makes drastic changes between iterations and only accepts better solutions. This works well for getting a good approximate answer because repeated random will not be bogged down by the way the numbers are distributed and just has a decent chance of hitting a good solution over many iterations. The disparity in runtimes between heuristics of the same solution representation can be explained at implementation level. Repeated random for the standard representation is slower compared to the other the other two heuristics. This is most likely due to the use of the append function when generating a random solution. Otherwise, the runtimes between heuristics are relatively close, which makes sense because many of their operations are shared with some minor constant factor differences.
+	These data show that the prepartitioning representation is much better than the standard representation. All three heuristic models returned averages with 9 digits, while the prepartitioning residuals were only 3 digits. This disparity is due to the Karmarkar-Karp algorithm, which is employed in calculating the residues for prepartitioning but not for the standard representation. Karmarkar-Karp adds another layer of heuristic that shapes the prepartitioned result to be better. Within one particular solution representation, hill climbing consistently performed the worst of the three heuristics. One explanation for this is that hill climbing will get stuck in local minimums. Even though a better solution can be achieved with a drastic change to the solution, hill climbing will never make this change because it will only accept marginal changes that are better. In both solution representations, simulated annealing and repeated random are relatively close in performance. Simulated annealing is not subject to the same trap of getting stuck in local minimums like hill climbing. Simulated annealing, however, is rather slow to make changes because it can only adjust to a neighbor. Repeated random makes drastic changes between iterations and only accepts better solutions. This works well for getting a good approximate answer because repeated random will not be bogged down by the way the numbers are distributed and just has a decent chance of hitting a good solution over many iterations. 
+	
+	The disparity in runtimes between heuristics of the same solution representation can be explained at the implementation level. Repeated random for the standard representation is slower compared to the other the other two heuristics. This is most likely due to the use of the append function when generating a random solution. Otherwise, the runtimes between heuristics are relatively close, which makes sense because many of their operations are shared with some minor constant factor differences.
+	
+	Comparing the runtimes of the Sequence of Signs (SS) and pre-partitioning (PP) representation , we find that SS representation computes much faster than the PP representation. This result makes sense because of the way residue is calculated for each representation. For the SS representation, residue is calculated in $O(n)$ time because every number is just multiplied by its respective sign and summed. For the PP representation, residue us calculated in $O(n\log n)$ time because the Karmankar-Karp algorithm has to execute on the generated problem.
 	
 
 	
 	\section{Future Work}
-	\textit{Discuss briefly how you could use the solution from the Karmarkar-Karp algorithm as a starting point for the randomized algorithms, and suggest what effect that might have. (No experiments are necessary, but feel free to try it.)}
 	
 	Instead of starting our random algorithms with a random solution, we could instead start with the partitioning given by running Karmankar-Karp algorithm on the list. Because Karmankar-Karp always gives us a decent approximation to the ideal partitioning, we would be starting intuitively from a ``better" place than a random solution. In particular, for algorithms that involve stepping to neighbors of the initial starting list (i.e. hill climbing and simulated annealing), starting from the Karmankar-Karp solution will be beneficial; for the repeated random method, starting from Karmankar-Karp has no bearing on the subsequently-generated random solutions, so starting from KK likely has less benefit.
 	
