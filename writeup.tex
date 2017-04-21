@@ -43,18 +43,20 @@
 	where \texttt{inputfile} specifies the file of 100 integers that represent the number partition problem for the Karmarkar-Karp algorithm to execute on.
 	
 	\section{Dynamic Programming}
-	The dynamic programming solution to the Number partition problem involves creating an $n \times 2b$ table. Every $(i,j)$ entry of the table contains a boolean, which describes if the first $i$ numbers can make the residue $j$.  Once the table is filled the optimal solution is found by looking for the smallest $k$ such that entry $(n,k)$ is True. Let $A$ be the sequence that represents the number partition problem (indexed at 1). Below is the recursive definition
-	\[X(i,j) = 
+	The dynamic programming solution to the Number partition problem involves creating an $n \times (2b+1)$ table. Every $(i,j)$ entry of the table contains a set of zero, one, or two ordered pairs, which describes the path of signs of the first $i$ numbers to make residue $j$. The ordered pairs are constructed to represent the residue from which the current element was constructed from. The first element of the ordered pair describes whether to place the $i$th number in the positive or negative set and the second element of the ordered pair describes the sequence that must have been followed to reach this signed residue. There are at most only two ordered pairs because given a particular signed residue and next number in the problem, there are only two possible signed residues that could have generated this new signed residue. For example if the current residue that is being checked is 4 and the $i$th number in the problem is 6, then the only two previous signed residues that can generate a signed residue of 4 are $-2$ and 10. Once the table is filled the optimal residue is found by looking for the smallest $k$ such that entry $(n,k)$ is nonempty. Let $A$ be the sequence that represents the number partition problem (indexed at 1). Let the table $X$ have indices $i \in [1,n]$ and $j \in [-b,b]$ . Below is the recursive definition
+	\[X[i,j] = 
 	\begin{cases}
-	True & i = 1, j = A[1]\\
-	False & i = 1, j \neq A[1] \\ 
-	False & X(i-1, j + A[i]) = X(i-1, |j - A[i]|) = False \\
-	True & otherwise
+	\{(+,\emptyset)\} & i = 1, j = A[1]\\
+	\emptyset & i = 1, j \neq A[1] \\ 
+	\emptyset & X(i-1, j + A[i]) = X(i-1, j - A[i]) = \emptyset \\
+	\{(+, X[i-1, j - A[i]])\} & X(i-1, j + A[i]) = \emptyset \\
+	\{(-, X[i-1, j + A[i]])\} & X(i-1, j - A[i]) = \emptyset \\
+	\{(+, X[i-1, j - A[i]]), (-, X[i-1, j + A[i]])\} & otherwise
 	\end{cases}`
 	\]
-	In essence, this recursive definition determines the new residue by adding or subtracting the next number in the problem to the residue of the current sequence. If a residue $j$ is unattainable with the first $i$ numbers in the sequence, the value at $(i,j)$ is set to False. 
+	In essence, this recursive definition determines the residue of the next number by adding or subtracting the next number in the problem to the signed residue of the current sequence. If a residue $j$ is unattainable with the first $i$ numbers in the sequence, the value at $(i,j)$ is set to an empty set. In order to find a sign representation of this problem, the smallest $k$ such that $X[n,k]$ is found by iterating over the last row. Then the sign of one of the ordered pairs in the set is added to a list and the second element of the same ordered pair is followed to the previous row of the table. From here this process of extracting the sign of an ordered pair and following up to the next row continues until the first row is reached. The resulting list of signs will be a solution that corresponds to residue $k$. If there are multiple ways to reach a particular residue then they can also be found be tracing every possible path back through the table. 
 	
-	This algorithm exhaustively checks every residue that an instance of the number partition problem can make. The runtime of this algorithm is $O(nb)$ because every entry in the table is checked exactly once and the operation done at each cell is to check two booleans.
+	This algorithm exhaustively checks every residue that an instance of the number partition problem can make. The space complexity is $O(n(2b+1)) = O(nb)$ because there are that many elements in the table and each element has a constant upper bound of space. The runtime of this algorithm is $O(nb)$ because every entry in the table is checked exactly once and the operation done at each cell is to check two booleans.
 	
 	\section{Karmarkar-Karp}
 	The Karmarkar-Karp algorithm can be performed in $O(n\log n)$ time if a max heap is used. Every iteration of the Karmarkar-Karp algorithm needs to find the largest two elements remaining in the problem, perform a subtraction, and push the difference onto the heap. This process is $O(\log n)$ because popping takes constant time and adding to the heap is logarithmic time. This process occurs $n-1$ times because one element is removed every iteration and the algorithm stops when there is one element remaining. Therefore the runtime of the algorithm is $O((n-1) \log n) = O(n\log n)$.
